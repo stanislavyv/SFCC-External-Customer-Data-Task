@@ -54,14 +54,14 @@ function put(endpoint, body) {
  * @param {Object} body
  * @returns {Object} api response
  */
-function patch(endpoint) {
+function patch(endpoint, body) {
     const requestObject = {
         requestMethod: "PATCH",
         endpoint,
         requestBody: body,
     };
 
-    return externalDataService.call(requestMethod);
+    return externalDataService.call(requestObject);
 }
 
 module.exports = {
