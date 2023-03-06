@@ -103,20 +103,21 @@ server.replace(
 
                 // attempt to create a new user and log that user in.
                 try {
-                    const externalResponse =
-                        externalDataServiceHelpers.register({
+                    Transaction.wrap(function () {
+                        var error = {};
+                        newCustomer = CustomerMgr.createCustomer(
                             login,
-                            password,
-                        });
+                            password
+                        );
 
-                    if (externalResponse.ok) {
-                        Transaction.wrap(function () {
-                            var error = {};
-                            newCustomer = CustomerMgr.createCustomer(
+                        const externalResponse =
+                            externalDataServiceHelpers.register({
+                                id: newCustomer.getProfile().customerNo,
                                 login,
-                                password
-                            );
+                                password,
+                            });
 
+                        if (externalResponse.ok) {
                             var authenticateCustomerResult =
                                 CustomerMgr.authenticateCustomer(
                                     login,
@@ -163,27 +164,37 @@ server.replace(
                                         order
                                     );
                                 allAddresses.forEach(function (address) {
-                                    addressHelpers.saveAddress(
-                                        address,
-                                        { raw: newCustomer },
-                                        addressHelpers.generateAddressName(
+                                    let externalAddressResponse =
+                                        externalDataServiceHelpers.createAddress(
+                                            newCustomer.getProfile().customerNo,
                                             address
-                                        )
-                                    );
+                                        );
+
+                                    if (externalAddressResponse.ok) {
+                                        addressHelpers.saveAddress(
+                                            address,
+                                            { raw: newCustomer },
+                                            addressHelpers.generateAddressName(
+                                                address
+                                            )
+                                        );
+                                    }
                                 });
 
                                 res.setViewData({ newCustomer: newCustomer });
                                 res.setViewData({ order: order });
                             }
-                        });
-                    } else {
-                        const error = {
-                            authError: true,
-                            status: externalResponse.status,
-                        };
+                        } else {
+                            CustomerMgr.removeCustomer(newCustomer);
 
-                        throw error;
-                    }
+                            error = {
+                                authError: true,
+                                status: externalResponse.status,
+                            };
+
+                            throw error;
+                        }
+                    });
                 } catch (e) {
                     errorObj.error = true;
                     errorObj.errorMessage = e.authError

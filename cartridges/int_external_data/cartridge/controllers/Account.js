@@ -119,24 +119,24 @@ server.replace(
                 if (registrationForm.validForm) {
                     var login = registrationForm.email;
                     var password = registrationForm.password;
+                    var error = {};
 
                     // attempt to create a new user and log that user in.
                     try {
-                        const externalResponse =
-                            externalDataServiceHelpers.register({
+                        Transaction.wrap(function () {
+                            var newCustomer = CustomerMgr.createCustomer(
                                 login,
-                                password,
-                            });
+                                password
+                            );
 
-                        var error = {};
-
-                        if (externalResponse.ok) {
-                            Transaction.wrap(function () {
-                                var newCustomer = CustomerMgr.createCustomer(
+                            const externalResponse =
+                                externalDataServiceHelpers.register({
+                                    id: newCustomer.getProfile().customerNo,
                                     login,
-                                    password
-                                );
+                                    password,
+                                });
 
+                            if (externalResponse.ok) {
                                 var authenticateCustomerResult =
                                     CustomerMgr.authenticateCustomer(
                                         login,
@@ -179,14 +179,16 @@ server.replace(
                                     newCustomerProfile.email =
                                         registrationForm.email;
                                 }
-                            });
-                        } else {
-                            error = {
-                                authError: true,
-                                status: externalResponse.status,
-                            };
-                            throw error;
-                        }
+                            } else {
+                                CustomerMgr.removeCustomer(newCustomer);
+
+                                error = {
+                                    authError: true,
+                                    status: externalResponse.status,
+                                };
+                                throw error;
+                            }
+                        });
                     } catch (e) {
                         if (e.authError) {
                             serverError = true;

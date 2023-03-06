@@ -89,7 +89,7 @@ function editProfile(customerId, formInfo) {
  * Adds a new address in customer's address book
  * @param {String} customerId
  * @param {Object | String} addressData address object or address id
- * @returns {Object} service result
+ * @returns {Object} service response
  */
 function createAddress(customerId, addressData) {
     const request = require("~/cartridge/scripts/util/request.js");
@@ -113,7 +113,7 @@ function createAddress(customerId, addressData) {
  * @param {String} customerId
  * @param {String} addressId
  * @param {Object} addressData
- * @returns {Object} service result
+ * @returns {Object} service response
  */
 function saveAddress(customerId, addressId, addressData) {
     const request = require("~/cartridge/scripts/util/request.js");
