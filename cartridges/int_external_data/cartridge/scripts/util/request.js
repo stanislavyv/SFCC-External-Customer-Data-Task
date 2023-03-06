@@ -64,9 +64,24 @@ function patch(endpoint, body) {
     return externalDataService.call(requestObject);
 }
 
+/**
+ * Calls externalData service with a delete request
+ * @param {String} endpoint
+ * @returns {Object} api response
+ */
+function remove(endpoint) {
+    const requestObject = {
+        requestMethod: "DELETE",
+        endpoint,
+    };
+
+    return externalDataService.call(requestObject);
+}
+
 module.exports = {
     get,
     post,
     put,
     patch,
+    remove,
 };

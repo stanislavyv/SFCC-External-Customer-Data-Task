@@ -26,14 +26,17 @@ const externalDataService = LocalServiceRegistry.createService(SERVICE_NAME, {
         const requestBody = args.requestBody
             ? JSON.stringify(args.requestBody)
             : null;
-            
+
         return requestBody;
     },
     mockCall(svc, inputBody) {
         let response = {};
         const body = JSON.parse(inputBody);
 
-        if (svc.requestMethod !== "GET" && !body) {
+        if (
+            (svc.requestMethod !== "GET" || svc.requestMethod !== "DELETE") &&
+            !body
+        ) {
             response = mockErrorResponse;
             response.errorMessage = "Please provide a body";
         } else {
@@ -47,7 +50,7 @@ const externalDataService = LocalServiceRegistry.createService(SERVICE_NAME, {
                 case "PUT":
                 case "PATCH":
                     response.statusCode = 204;
-                    response.statusMessage = "Resource updated successfuly";
+                    response.statusMessage = "Resource updated successfully";
                     break;
                 default:
                     break;
