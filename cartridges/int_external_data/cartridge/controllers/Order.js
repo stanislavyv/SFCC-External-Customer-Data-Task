@@ -10,8 +10,6 @@ var Resource = require("dw/web/Resource");
 var URLUtils = require("dw/web/URLUtils");
 var csrfProtection = require("*/cartridge/scripts/middleware/csrf");
 
-const externalDataServiceHelpers = require("~/cartridge/scripts/helpers/externalDataServiceHelpers.js");
-
 const base = module.superModule;
 server.extend(base);
 
@@ -37,6 +35,8 @@ server.replace(
         var OrderMgr = require("dw/order/OrderMgr");
 
         var formErrors = require("*/cartridge/scripts/formErrors");
+
+        const externalDataServiceHelpers = require("~/cartridge/scripts/helpers/externalDataServiceHelpers.js");
 
         var passwordForm = server.forms.getForm("newPasswords");
         var newPassword = passwordForm.newpassword.htmlValue;

@@ -1,7 +1,5 @@
 "use strict";
 
-const externalDataServiceHelpers = require("~/cartridge/scripts/helpers/externalDataServiceHelpers.js");
-
 const base = module.superModule;
 
 /**
@@ -16,8 +14,9 @@ function saveAddress(address, customer, addressId) {
 
     var addressBook = customer.raw.getProfile().getAddressBook();
 
+    const externalDataServiceHelpers = require("~/cartridge/scripts/helpers/externalDataServiceHelpers.js");
     const externalResponse = externalDataServiceHelpers.createAddress(
-        customer.getProfile().customerNo,
+        customer.raw.getProfile().customerNo,
         address
     );
 

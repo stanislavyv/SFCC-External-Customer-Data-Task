@@ -1,12 +1,12 @@
-const request = require("~/cartridge/scripts/util/request.js");
-const endpoints = require("~/cartridge/contstants/endpoints");
-
 /**
  * Externally registers a customer
  * @param {Object} customerData
  * @returns {Object} service response
  */
 function register(customerData) {
+    const request = require("~/cartridge/scripts/util/request.js");
+    const endpoints = require("~/cartridge/contstants/endpoints");
+
     return request.post(endpoints.CUSTOMERS, customerData);
 }
 
@@ -18,6 +18,9 @@ function register(customerData) {
  * @returns {Object} service response
  */
 function setPassword(customerId, currentPassword, newPassword) {
+    const request = require("~/cartridge/scripts/util/request.js");
+    const endpoints = require("~/cartridge/contstants/endpoints");
+
     return request.patch(endpoints.getCustomerEndpoint(customerId), {
         currentPassword,
         newPassword,
@@ -31,6 +34,9 @@ function setPassword(customerId, currentPassword, newPassword) {
  * @returns {Object} service response
  */
 function setPasswordResetToken(customerId, token) {
+    const request = require("~/cartridge/scripts/util/request.js");
+    const endpoints = require("~/cartridge/contstants/endpoints");
+
     return request.post(endpoints.getCustomerResetTokenEndpoint(customerId), {
         token,
     });
@@ -44,6 +50,9 @@ function setPasswordResetToken(customerId, token) {
  * @returns {Object} service response
  */
 function resetPassword(customerId, token, newPassword) {
+    const request = require("~/cartridge/scripts/util/request.js");
+    const endpoints = require("~/cartridge/contstants/endpoints");
+
     return request.post(
         endpoints.getCustomerResetPasswordEndpoint(customerId),
         {
@@ -60,6 +69,9 @@ function resetPassword(customerId, token, newPassword) {
  * @returns {Object} service response
  */
 function editProfile(customerId, formInfo) {
+    const request = require("~/cartridge/scripts/util/request.js");
+    const endpoints = require("~/cartridge/contstants/endpoints");
+
     const customerData = {
         fistName: formInfo.firstName,
         lastName: formInfo.lastName,
@@ -80,6 +92,9 @@ function editProfile(customerId, formInfo) {
  * @returns {Object} service result
  */
 function createAddress(customerId, addressData) {
+    const request = require("~/cartridge/scripts/util/request.js");
+    const endpoints = require("~/cartridge/contstants/endpoints");
+
     let address;
 
     if (typeof addressData === "string") {
@@ -101,13 +116,17 @@ function createAddress(customerId, addressData) {
  * @returns {Object} service result
  */
 function saveAddress(customerId, addressId, addressData) {
+    const request = require("~/cartridge/scripts/util/request.js");
+    const endpoints = require("~/cartridge/contstants/endpoints");
+
     const result = request.patch(
         endpoints.getCustomerAddressEnpoint(customerId, addressId),
         addressData
     );
 
     if (!result.ok) {
-        return createAddress(customerId, { addressId, ...addressData });
+        const addressObject = Object.assign({ addressId }, addressData);
+        return createAddress(customerId, addressObject);
     }
 
     return result;
@@ -120,6 +139,9 @@ function saveAddress(customerId, addressId, addressData) {
  * @returns {Object} service response
  */
 function removeAddress(customerId, addressId) {
+    const request = require("~/cartridge/scripts/util/request.js");
+    const endpoints = require("~/cartridge/contstants/endpoints");
+
     return request.remove(
         endpoints.getCustomerAddressEnpoint(customerId, addressId)
     );

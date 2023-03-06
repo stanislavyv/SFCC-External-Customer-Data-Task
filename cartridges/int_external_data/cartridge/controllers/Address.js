@@ -11,10 +11,10 @@ var Resource = require("dw/web/Resource");
 var csrfProtection = require("*/cartridge/scripts/middleware/csrf");
 var userLoggedIn = require("*/cartridge/scripts/middleware/userLoggedIn");
 
-const externalDataServiceHelpers = require("~/cartridge/scripts/helpers/externalDataServiceHelpers.js");
-
 const base = module.superModule;
 server.extend(base);
+
+const externalDataServiceHelpers = require("~/cartridge/scripts/helpers/externalDataServiceHelpers.js");
 
 /**
  * Address-SaveAddress : Save a new or existing address

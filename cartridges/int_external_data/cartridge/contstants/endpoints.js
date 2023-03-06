@@ -3,14 +3,12 @@ const RESET_TOKEN = "resetToken";
 const RESET_PASSWORD = "resetPassword";
 const ADDRESS_BOOK = "addressBook";
 
-exports.CUSTOMERS = CUSTOMERS;
-
 /**
  * Gets the endpoint for customer
  * @param {String} customerId
  * @returns {String}
  */
-exports.getCustomerEndpoint = function (customerId) {
+const getCustomerEndpoint = function (customerId) {
     return `${CUSTOMERS}/${customerId}`;
 };
 
@@ -19,7 +17,7 @@ exports.getCustomerEndpoint = function (customerId) {
  * @param {String} customerId
  * @returns {String}
  */
-exports.getCustomerResetTokenEndpoint = function (customerId) {
+const getCustomerResetTokenEndpoint = function (customerId) {
     return `${getCustomerEndpoint(customerId)}/${RESET_TOKEN}`;
 };
 
@@ -28,7 +26,7 @@ exports.getCustomerResetTokenEndpoint = function (customerId) {
  * @param {String} customerId
  * @returns {String}
  */
-exports.getCustomerResetPasswordEndpoint = function (customerId) {
+const getCustomerResetPasswordEndpoint = function (customerId) {
     return `${getCustomerEndpoint(customerId)}/${RESET_PASSWORD}`;
 };
 
@@ -37,7 +35,7 @@ exports.getCustomerResetPasswordEndpoint = function (customerId) {
  * @param {String} customerId
  * @returns {String}
  */
-exports.getCustomerAddressBookEndpoint = function (customerId) {
+const getCustomerAddressBookEndpoint = function (customerId) {
     return `${getCustomerEndpoint(customerId)}/${ADDRESS_BOOK}`;
 };
 
@@ -46,6 +44,15 @@ exports.getCustomerAddressBookEndpoint = function (customerId) {
  * @param {String} customerId
  * @returns {String}
  */
-exports.getCustomerAddressEnpoint = function (customerId, addressId) {
+const getCustomerAddressEnpoint = function (customerId, addressId) {
     return `${getCustomerAddressBookEndpoint(customerId)}/${addressId}`;
+};
+
+module.exports = {
+    CUSTOMERS,
+    getCustomerEndpoint,
+    getCustomerResetTokenEndpoint,
+    getCustomerResetPasswordEndpoint,
+    getCustomerAddressBookEndpoint,
+    getCustomerAddressEnpoint,
 };
