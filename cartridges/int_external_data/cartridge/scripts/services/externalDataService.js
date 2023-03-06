@@ -1,19 +1,22 @@
 "use strict";
+const serviceMessages = require("~/cartridge/contstants/serviceMessages");
 
 const SERVICE_NAME = "http.externalData";
+
 const PASSWORD_PATTERN = /"password"\s?[=:]\s?".*"/gm;
+const PASSWORD_REPLACE_TEXT = `"password":**********`;
 
 const LocalServiceRegistry = require("dw/svc/LocalServiceRegistry");
 
 const mockSuccessResponse = {
     statusCode: 200,
-    statusMessage: "Success",
+    statusMessage: serviceMessages.STATUS_MESSAGE_SUCCESS,
     ok: true,
 };
 
 const mockErrorResponse = {
     statusCode: 400,
-    statusMessage: "Error",
+    statusMessage: serviceMessages.STATUS_MESSAGE_ERROR,
     ok: false,
 };
 
@@ -38,19 +41,21 @@ const externalDataService = LocalServiceRegistry.createService(SERVICE_NAME, {
             !body
         ) {
             response = mockErrorResponse;
-            response.errorMessage = "Please provide a body";
+            response.errorMessage = serviceMessages.ERROR_MESSAGE_BODY;
         } else {
             response = mockSuccessResponse;
 
             switch (svc.requestMethod) {
                 case "POST":
                     response.statusCode = 201;
-                    response.statusMessage = "Created";
+                    response.statusMessage =
+                        serviceMessages.STATUS_MESSAGE_CREATED;
                     break;
                 case "PUT":
                 case "PATCH":
                     response.statusCode = 204;
-                    response.statusMessage = "Resource updated successfully";
+                    response.statusMessage =
+                        serviceMessages.STATUS_MESSAGE_UPDATED;
                     break;
                 default:
                     break;
@@ -71,7 +76,7 @@ const externalDataService = LocalServiceRegistry.createService(SERVICE_NAME, {
         return result;
     },
     filterLogMessage(msg) {
-        return msg.replace(PASSWORD_PATTERN, `"password":**********`);
+        return msg.replace(PASSWORD_PATTERN, PASSWORD_REPLACE_TEXT);
     },
 });
 

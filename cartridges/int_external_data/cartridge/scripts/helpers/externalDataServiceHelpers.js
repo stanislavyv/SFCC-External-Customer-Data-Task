@@ -1,4 +1,5 @@
 const request = require("~/cartridge/scripts/util/request.js");
+const endpoints = require("~/cartridge/contstants/endpoints");
 
 /**
  * Externally registers a customer
@@ -6,7 +7,7 @@ const request = require("~/cartridge/scripts/util/request.js");
  * @returns {Object} service response
  */
 function register(customerData) {
-    return request.post("customers", customerData);
+    return request.post(endpoints.CUSTOMERS, customerData);
 }
 
 /**
@@ -17,7 +18,7 @@ function register(customerData) {
  * @returns {Object} service response
  */
 function setPassword(customerId, currentPassword, newPassword) {
-    return request.patch(`customers/${customerId}`, {
+    return request.patch(endpoints.getCustomerEndpoint(customerId), {
         currentPassword,
         newPassword,
     });
@@ -30,7 +31,7 @@ function setPassword(customerId, currentPassword, newPassword) {
  * @returns {Object} service response
  */
 function setPasswordResetToken(customerId, token) {
-    return request.post(`customer/${customerId}/resetToken`, {
+    return request.post(endpoints.getCustomerResetTokenEndpoint(customerId), {
         token,
     });
 }
@@ -43,10 +44,13 @@ function setPasswordResetToken(customerId, token) {
  * @returns {Object} service response
  */
 function resetPassword(customerId, token, newPassword) {
-    return request.post(`customer/${customerId}/resetPassword`, {
-        token,
-        newPassword,
-    });
+    return request.post(
+        endpoints.getCustomerResetPasswordEndpoint(customerId),
+        {
+            token,
+            newPassword,
+        }
+    );
 }
 
 /**
@@ -63,7 +67,10 @@ function editProfile(customerId, formInfo) {
         phone: formInfo.phone,
     };
 
-    return request.patch(`customers/${customerId}`, customerData);
+    return request.patch(
+        endpoints.getCustomerEndpoint(customerId),
+        customerData
+    );
 }
 
 /**
@@ -81,7 +88,7 @@ function createAddress(customerId, addressData) {
         address = addressData;
     }
 
-    return request.post(`customers/${customerId}/addressBook`, {
+    return request.post(endpoints.getCustomerAddressBookEndpoint(customerId), {
         address,
     });
 }
@@ -95,7 +102,7 @@ function createAddress(customerId, addressData) {
  */
 function saveAddress(customerId, addressId, addressData) {
     const result = request.patch(
-        `customers/${customerId}/addressBook/${addressId}`,
+        endpoints.getCustomerAddressEnpoint(customerId, addressId),
         addressData
     );
 
@@ -113,7 +120,9 @@ function saveAddress(customerId, addressId, addressData) {
  * @returns {Object} service response
  */
 function removeAddress(customerId, addressId) {
-    return request.remove(`customers/${customerId}/addressBook/${addressId}`);
+    return request.remove(
+        endpoints.getCustomerAddressEnpoint(customerId, addressId)
+    );
 }
 
 module.exports = {
