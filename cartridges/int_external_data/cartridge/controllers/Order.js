@@ -164,21 +164,13 @@ server.replace(
                                         order
                                     );
                                 allAddresses.forEach(function (address) {
-                                    let externalAddressResponse =
-                                        externalDataServiceHelpers.createAddress(
-                                            newCustomer.getProfile().customerNo,
+                                    addressHelpers.saveAddress(
+                                        address,
+                                        { raw: newCustomer },
+                                        addressHelpers.generateAddressName(
                                             address
-                                        );
-
-                                    if (externalAddressResponse.ok) {
-                                        addressHelpers.saveAddress(
-                                            address,
-                                            { raw: newCustomer },
-                                            addressHelpers.generateAddressName(
-                                                address
-                                            )
-                                        );
-                                    }
+                                        )
+                                    );
                                 });
 
                                 res.setViewData({ newCustomer: newCustomer });
