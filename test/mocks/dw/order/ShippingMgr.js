@@ -1,73 +1,15 @@
+var ShippingMgr = function(){};
 
-var ArrayList = require('../../../mocks/dw.util.Collection');
+ShippingMgr.getShippingCost = function(){};
+ShippingMgr.getProductShippingModel = function(){};
+ShippingMgr.getShipmentShippingModel = function(){};
+ShippingMgr.getAllShippingMethods = function(){};
+ShippingMgr.getDefaultShippingMethod = function(){};
+ShippingMgr.applyShippingCost = function(){};
+ShippingMgr.prototype.shippingCost=null;
+ShippingMgr.prototype.productShippingModel=null;
+ShippingMgr.prototype.shipmentShippingModel=null;
+ShippingMgr.prototype.allShippingMethods=null;
+ShippingMgr.prototype.defaultShippingMethod=null;
 
-var defaultShippingMethod =
-    {
-        description: 'Order received within 7-10 business days',
-        displayName: 'Ground',
-        ID: '001',
-        custom: {
-            estimatedArrivalTime: '7-10 Business Days'
-        }
-    };
-
-function createShipmentShippingModel() {
-    return {
-        applicableShippingMethods: new ArrayList([
-            {
-                description: 'Order received within 7-10 business days',
-                displayName: 'Ground',
-                ID: '001',
-                custom: {
-                    estimatedArrivalTime: '7-10 Business Days'
-                }
-            },
-            {
-                description: 'Order received in 2 business days',
-                displayName: '2-Day Express',
-                ID: '002',
-                shippingCost: '$0.00',
-                custom: {
-                    estimatedArrivalTime: '2 Business Days'
-                }
-            }
-        ]),
-        getApplicableShippingMethods: function () {
-            return new ArrayList([
-                {
-                    description: 'Order received within 7-10 business days',
-                    displayName: 'Ground',
-                    ID: '001',
-                    custom: {
-                        estimatedArrivalTime: '7-10 Business Days'
-                    }
-                },
-                {
-                    description: 'Order received in 2 business days',
-                    displayName: '2-Day Express',
-                    ID: '002',
-                    shippingCost: '$0.00',
-                    custom: {
-                        estimatedArrivalTime: '2 Business Days'
-                    }
-                }
-            ]);
-        },
-        getShippingCost: function () {
-            return {
-                amount: {
-                    valueOrNull: 7.99
-                }
-            };
-        }
-    };
-}
-
-module.exports = {
-    getDefaultShippingMethod: function () {
-        return defaultShippingMethod;
-    },
-    getShipmentShippingModel: function (shipment) {
-        return createShipmentShippingModel(shipment);
-    }
-};
+module.exports = ShippingMgr;

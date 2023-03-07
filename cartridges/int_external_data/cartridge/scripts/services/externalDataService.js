@@ -34,10 +34,17 @@ const externalDataService = LocalServiceRegistry.createService(SERVICE_NAME, {
     },
     mockCall(svc, inputBody) {
         let response = {};
-        const body = JSON.parse(inputBody);
+
+        let body;
+        try {
+            body = JSON.parse(inputBody);
+        } catch (e) {
+            body = inputBody;
+        }
 
         if (
-            (svc.requestMethod !== "GET" || svc.requestMethod !== "DELETE") &&
+            svc.requestMethod !== "GET" &&
+            svc.requestMethod !== "DELETE" &&
             !body
         ) {
             response = mockErrorResponse;
@@ -56,6 +63,11 @@ const externalDataService = LocalServiceRegistry.createService(SERVICE_NAME, {
                     response.statusCode = 204;
                     response.statusMessage =
                         serviceMessages.STATUS_MESSAGE_UPDATED;
+                    break;
+                case "DELETE":
+                    response.statusCode = 204;
+                    response.statusMessage =
+                        serviceMessages.STATUS_MESSAGE_DELETED;
                     break;
                 default:
                     break;

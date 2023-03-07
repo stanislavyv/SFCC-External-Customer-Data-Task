@@ -75,7 +75,7 @@ function editProfile(customerId, formInfo) {
     const customerData = {
         fistName: formInfo.firstName,
         lastName: formInfo.lastName,
-        email: formInfo.email,
+        login: formInfo.email,
         phone: formInfo.phone,
     };
 

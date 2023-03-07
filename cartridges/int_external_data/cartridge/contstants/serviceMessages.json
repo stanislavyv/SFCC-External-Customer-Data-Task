@@ -2,6 +2,7 @@
     "STATUS_MESSAGE_SUCCESS": "Success",
     "STATUS_MESSAGE_ERROR": "Error",
     "STATUS_MESSAGE_CREATED": "Created",
+    "STATUS_MESSAGE_DELETED": "Deleted",
     "STATUS_MESSAGE_UPDATED": "Resource updated successfully",
     "ERROR_MESSAGE_BODY": "Please provide a body"
 }
