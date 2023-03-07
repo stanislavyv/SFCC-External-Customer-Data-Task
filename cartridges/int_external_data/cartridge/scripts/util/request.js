@@ -3,14 +3,25 @@
 const externalDataService = require("~/cartridge/scripts/services/externalDataService.js");
 
 /**
+ * Appends .json to endoint to satisfy firebase syntax
+ * @param {String} endpoint
+ * @returns {String}
+ */
+function modifyEndpoint(endpoint) {
+    return endpoint + ".json";
+}
+
+/**
  * Calls externalData service with a get request
  * @param {String} endpoint
  * @returns {Object} api response
  */
 function get(endpoint) {
+    const modifiedEndpoint = modifyEndpoint(endpoint);
+
     const requestObject = {
         requestMethod: "GET",
-        endpoint,
+        endpoint: modifiedEndpoint,
     };
 
     return externalDataService.call(requestObject);
@@ -23,9 +34,11 @@ function get(endpoint) {
  * @returns {Object} api response
  */
 function post(endpoint, body) {
+    const modifiedEndpoint = modifyEndpoint(endpoint);
+
     const requestObject = {
         requestMethod: "POST",
-        endpoint,
+        endpoint: modifiedEndpoint,
         requestBody: body,
     };
 
@@ -39,9 +52,11 @@ function post(endpoint, body) {
  * @returns {Object} api response
  */
 function put(endpoint, body) {
+    const modifiedEndpoint = modifyEndpoint(endpoint);
+
     const requestObject = {
         requestMethod: "PUT",
-        endpoint,
+        endpoint: modifiedEndpoint,
         requestBody: body,
     };
 
@@ -55,9 +70,11 @@ function put(endpoint, body) {
  * @returns {Object} api response
  */
 function patch(endpoint, body) {
+    const modifiedEndpoint = modifyEndpoint(endpoint);
+
     const requestObject = {
         requestMethod: "PATCH",
-        endpoint,
+        endpoint: modifiedEndpoint,
         requestBody: body,
     };
 
@@ -70,9 +87,11 @@ function patch(endpoint, body) {
  * @returns {Object} api response
  */
 function remove(endpoint) {
+    const modifiedEndpoint = modifyEndpoint(endpoint);
+
     const requestObject = {
         requestMethod: "DELETE",
-        endpoint,
+        endpoint: modifiedEndpoint,
     };
 
     return externalDataService.call(requestObject);
