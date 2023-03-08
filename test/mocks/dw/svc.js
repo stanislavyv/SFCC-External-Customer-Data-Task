@@ -1,5 +1,3 @@
-exports.FTPService = require('./svc/FTPService');
-exports.HTTPFormService = require('./svc/HTTPFormService');
 exports.HTTPService = require('./svc/HTTPService');
 exports.LocalServiceRegistry = require('./svc/LocalServiceRegistry');
 exports.Result = require('./svc/Result');

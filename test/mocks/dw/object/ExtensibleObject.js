@@ -1,4 +1,4 @@
-var _super = require('../object/PersistentObject');
+var _super = require('./PersistentObject');
 
 var ExtensibleObject = function(){};
 

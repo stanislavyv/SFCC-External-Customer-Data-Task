@@ -11,7 +11,7 @@ const serviceMessages = {
     ERROR_MESSAGE_BODY: "Please provide a body",
 };
 
-const LocalServiceRegistry = require("../dw/svc/LocalServiceRegistry");
+const LocalServiceRegistry = require("../dw/svc").LocalServiceRegistry;
 const externalDataService = proxyquire(
     "../../../cartridges/int_external_data/cartridge/scripts/services/externalDataService.js",
     {
